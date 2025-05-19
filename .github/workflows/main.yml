@@ -1,8 +1,11 @@
-name: Node.js CI/CD Demo
+name: Deploy to gitHub
 
 on:
   push:
     branches: [ main ]
+
+permissions:
+  contents: write  # Needed for GitHub Pages deploy
 
 jobs:
   build-test-deploy:
@@ -26,5 +29,8 @@ jobs:
     - name: Run Tests
       run: npm test
 
-    - name: Deploy (simulate)
-      run: echo "Deploy step (simulate)"
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
